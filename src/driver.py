@@ -1,4 +1,4 @@
-from person import Person
+from src.person import Person
 
 class Driver(Person):
 
@@ -7,7 +7,6 @@ class Driver(Person):
         self.vehicle = None
 
     def take_vehicle(self, vehicle):
-
         if not (self.vehicle is None):
             raise DriverNotAvailableException()
 

@@ -1,0 +1,73 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+
+class Enterprise {
+  - drivers : Driver[]
+  - vehicles : Vehicle[]
+  + <get>vehicleByChassisNumber(chassisNumber : string) : Vehicle
+  + <get>driverByEmailaddress(driverEmailaddress : string) : Driver
+  + AssignVehicleToDriver(chassisNumber : string, driverEmailaddress : string) : void
+  + PrepareDelivery(delivery : Delivery, chassisNumber : string, driverEmailaddress : string) : void
+}
+
+class Vehicle {
+  - chassisNumber : string
+  + Vehicle(chassisNumber : string)
+}
+
+class Driver {
+  - vehicle : Vehicle
+  + takeAVehicle(vehicle : Vehicle) : void
+}
+
+class Person {
+  - emailAddress : string
+  + Person(emailAddress : string)
+  + <get>email() : string
+}
+
+class Delivery {
+  - hazardousCargos : boolean
+  + Delivery(hazardousCargos : boolean)
+  + <get>hazardousCargos() : boolean
+}
+
+class Truck {
+  + Truck(homologueHazardous : boolean)
+  + <get>homologueHazardous() : boolean
+}
+
+class TruckDriver {
+  + TruckDriver(licenseHazardousValidityLimit : datetime)
+  + <get>licenseHazardousValidityLimit() : datetime
+}
+
+class DriverNotFoundException {
+}
+
+class VehicleNotFoundException {
+}
+
+class DriverNotAvailableException {
+}
+
+class TruckDriverHazardousLicenseException {
+}
+
+class TruckHazardousMaterialException {
+}
+
+Vehicle --o Enterprise
+Driver --o Enterprise
+Driver ..> Vehicle
+Driver --|> Person
+DriverNotFoundException --+ Enterprise
+VehicleNotFoundException --+ Enterprise
+TruckDriverHazardousLicenseException --+ Enterprise
+TruckHazardousMaterialException --+ Enterprise
+Driver --> DriverNotAvailableException : throw
+Enterprise ..> Delivery
+Truck --|> Vehicle
+TruckDriver --|> Driver
+@enduml
